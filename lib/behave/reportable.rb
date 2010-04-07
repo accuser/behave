@@ -1,5 +1,6 @@
 require 'active_model'
 require 'active_support'
+require 'cached_document'
 require 'mongoid'
 
 module Behave
@@ -33,7 +34,7 @@ module Behave
       field :reported, :type => Boolean, :default => false
       field :reported_at, :type => Time
       field :reported_by, :type => CachedDocument
-    
+      
       define_model_callbacks :report
     end
 

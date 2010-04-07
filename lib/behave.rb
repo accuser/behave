@@ -33,6 +33,7 @@ module Behave
   extend ActiveSupport::Concern
 
   included do
+    include Mongoid::Document
     include Behave::Behaviors
   end
 end
