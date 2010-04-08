@@ -6,7 +6,7 @@ module Behave
     extend ActiveSupport::Concern
   
     module ClassMethods
-      def searchable(options => {}, &block)
+      def searchable(options = {}, &block)
         options.symbolize_keys!
         options.reverse_merge :delay => true
         
