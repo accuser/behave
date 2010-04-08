@@ -6,15 +6,13 @@ module Behave
   
     module ClassMethods
       def cachable(options = {})
-        options.symbolize_keys!
+        class_inheritable_hash :cachable_options
 
-        unless cachable?
-          class_inheritable_hash :cachable_options
-          
-          include Features            
-        end
-          
+        options.symbolize_keys!
+        
         self.cachable_options = options
+
+        include Behave::Cachable unless cachable?        
       end
       
       private
@@ -22,32 +20,37 @@ module Behave
           false
         end
     end
-    
-    module Cachable
-      extend ActiveSupport::Concern
+  end
+  
+  module Cachable
+    extend ActiveSupport::Concern
 
-      module ClassMethods
-        private
-          def cachable?
-            true
-          end
-      end
+    module ClassMethods
+      private
+        def cachable?
+          true
+        end
+    end
 
-      module InstanceMethods
-        def cachable_attributes
-          attributes.reject do |key, value|
-            if [ :id, :_id, :type, :_type ].include?(key.to_sym)
-              false
-            elsif self.class.cachable_options[:only]
-              !self.class.cachable_options[:only].include?(key.to_sym)
-            elsif self.class.cachable_options[:except]
-              self.class.cachable_options[:except].include?(key.to_sym)
-            else
-              false
-            end
+    module InstanceMethods
+      def cachable_attributes
+        attributes.reject do |key, value|
+          if [ :id, :_id, :type, :_type ].include?(key.to_sym)
+            false
+          elsif cachable_options[:only]
+            !cachable_options[:only].include?(key.to_sym)
+          elsif cachable_options[:except]
+            cachable_options[:except].include?(key.to_sym)
+          else
+            false
           end
         end
       end
+      
+      private
+        def cachable_options
+          self.class.cachable_options
+        end
     end
   end
 end

@@ -25,9 +25,21 @@ require 'rubygems'
 
 gem 'activemodel', '>= 3.0.0.beta2'
 gem 'activesupport', '>= 3.0.0.beta2'
+gem 'delayed_job', '>= 1.7.0'
 gem 'mongoid', '>= 2.0.0.beta2'
+gem 'mongoid_cached_document', '>= 0.1.0'
+gem 'sunspot_rails', '>= 1.0.0'
 
+require 'behave/cachable'
+require 'behave/containable'
+require 'behave/lockable'
+require 'behave/moderatable'
+require 'behave/publishable'
 require 'behave/reportable'
+require 'behave/searchable'
+require 'behave/serializable'
+require 'behave/textilize'
+require 'behave/timestamp'
 
 module Behave
   extend ActiveSupport::Concern

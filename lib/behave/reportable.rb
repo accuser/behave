@@ -1,7 +1,6 @@
-require 'active_model'
 require 'active_support'
-require 'cached_document'
 require 'mongoid'
+require 'mongoid/cached_document'
 
 module Behave
   module Behaviors
@@ -9,6 +8,8 @@ module Behave
 
     module ClassMethods
       def reportable(options = {})
+        options.symbolize_keys!
+        
         include Behave::Reportable unless reportable?
 
         if options.has_key? :before
@@ -33,7 +34,7 @@ module Behave
     included do
       field :reported, :type => Boolean, :default => false
       field :reported_at, :type => Time
-      field :reported_by, :type => CachedDocument
+      field :reported_by, :type => Mongoid::CachedDocument
       
       define_model_callbacks :report
     end
@@ -44,7 +45,7 @@ module Behave
       end
 
       def reported_by(reporter)
-        reported.where 'reported_by._type' => reporter._type, 'reporter_by._id' => reporter._id
+        reported.where 'reported_by._type' => reporter.class.to_s, 'reported_by._id' => reporter.id
       end
       
       private

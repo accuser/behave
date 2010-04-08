@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Matthew Gibbons"]
-  s.date = %q{2010-04-06}
-  s.description = %q{Behave is a Ruby Gem that encapsulates a number of commen model behaviors. }
+  s.date = %q{2010-04-07}
+  s.description = %q{Behave is a Ruby Gem that encapsulates a number of common model behaviors for Mongoid documents.}
   s.email = %q{mhgibbons@me.com}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -23,9 +23,11 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION",
+     "behave.gemspec",
      "lib/behave.rb",
+     "lib/behave/cachable.rb",
      "lib/behave/reportable.rb",
-     "spec/behave_spec.rb",
+     "lib/cached_document.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb"
   ]
@@ -35,8 +37,10 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.6}
   s.summary = %q{Encapsulates common model behaviors}
   s.test_files = [
-    "spec/behave_spec.rb",
-     "spec/spec_helper.rb"
+    "spec/spec_helper.rb",
+     "spec/unit/behave/cachable_spec.rb",
+     "spec/unit/behave/publishable_spec.rb",
+     "spec/unit/behave/reportable_spec.rb"
   ]
 
   if s.respond_to? :specification_version then
@@ -46,19 +50,25 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<activemodel>, [">= 3.0.0.beta2"])
       s.add_runtime_dependency(%q<activesupport>, [">= 3.0.0.beta2"])
+      s.add_runtime_dependency(%q<delayed_job>, [">= 1.7.0"])
       s.add_runtime_dependency(%q<mongoid>, [">= 2.0.0.beta2"])
-      s.add_development_dependency(%q<rspec>, [">= 2.0.0.beta.4"])
+      s.add_runtime_dependency(%q<mongoid_cached_document>, [">= 0.1.0"])
+      s.add_runtime_dependency(%q<sunspot_rails>, [">= 1.0.0"])
     else
       s.add_dependency(%q<activemodel>, [">= 3.0.0.beta2"])
       s.add_dependency(%q<activesupport>, [">= 3.0.0.beta2"])
+      s.add_dependency(%q<delayed_job>, [">= 1.7.0"])
       s.add_dependency(%q<mongoid>, [">= 2.0.0.beta2"])
-      s.add_dependency(%q<rspec>, [">= 2.0.0.beta.4"])
+      s.add_dependency(%q<mongoid_cached_document>, [">= 0.1.0"])
+      s.add_dependency(%q<sunspot_rails>, [">= 1.0.0"])
     end
   else
     s.add_dependency(%q<activemodel>, [">= 3.0.0.beta2"])
     s.add_dependency(%q<activesupport>, [">= 3.0.0.beta2"])
+    s.add_dependency(%q<delayed_job>, [">= 1.7.0"])
     s.add_dependency(%q<mongoid>, [">= 2.0.0.beta2"])
-    s.add_dependency(%q<rspec>, [">= 2.0.0.beta.4"])
+    s.add_dependency(%q<mongoid_cached_document>, [">= 0.1.0"])
+    s.add_dependency(%q<sunspot_rails>, [">= 1.0.0"])
   end
 end
 
