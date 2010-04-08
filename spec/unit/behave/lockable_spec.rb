@@ -144,4 +144,49 @@ describe Behave::Lockable do
       end
     end
   end
+  
+  describe "unlocking a document" do
+    before :each do
+      @document = LockableDocument.create
+      
+      mock_locker.stub(:class).and_return(Locker)
+      mock_locker.stub(:id).and_return(42)
+    end
+    
+    after :each do
+      @document.destroy
+    end
+        
+    describe "when locked by locker" do
+      before :each do
+        @document.lock(mock_locker)
+      end
+
+      it "should mark the document as unlocked" do
+        lambda do
+          @document.unlock(mock_locker)
+        end.should change(@document, :locked).from(true).to(false)
+      end
+    
+      it "should succeed" do
+        @document.unlock(mock_locker).should be true
+      end
+    end
+    
+    describe "when not locked by locker" do
+      before :each do
+        @document.lock(mock(Locker, :class => Locker, :id => 37))
+      end
+      
+      it "should fail" do
+        @document.unlock(mock_locker).should be false
+      end
+    end
+    
+    describe "when not locked" do
+      it "should succeed" do
+        @document.unlock(mock_locker).should be true
+      end
+    end
+  end
 end
