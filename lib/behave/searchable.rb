@@ -93,13 +93,13 @@ module Behave
       end
     end
     
-    class IndexJob < Struct(:searchable)
+    class IndexJob < Struct.new(:searchable)
       def perform
         Sunspot.index! self.searchable
       end
     end
     
-    class RemoveFromIndexJob < Struct(:searchable)
+    class RemoveFromIndexJob < Struct.new(:searchable)
       def perform
         Sunspot.remove! self.searchable
       end
