@@ -63,11 +63,11 @@ module Behave
       end
     
       def is_locked_by?(locker)
-        self.locked? && self.locked_by._type == locker.class.to_s && self.locked_by._id == locker.class.to_s
+        self.locked? && self.locked_by._type == locker.class.to_s && self.locked_by._id == locker.id
       end
       
       def unlock(locker)
-        if locked_by? locker
+        if is_locked_by? locker
           update_attributes :locked => false, :locked_by => nil
         end
       
