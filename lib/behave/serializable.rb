@@ -1,3 +1,4 @@
+require 'active_model'
 require 'active_support'
 
 module Behave
@@ -45,12 +46,8 @@ module Behave
         end
       end
     
-      def to_json(options = {})
+      def to_json(options = nil)
         serializable_attributes.to_json options
-      end
-
-      def to_xml(options = {})
-        serializable_attributes.to_xml options
       end
     end
   end
