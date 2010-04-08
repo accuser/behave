@@ -35,10 +35,10 @@ module Behave
         attributes.reject do |key, value|
           if [ :id, :_id, :type, :_type ].include?(key.to_sym)
             false
-          elsif serializable_options[:only]
-            !serializable_options[:only].include?(key.to_sym)
-          elsif serializable_options[:except]
-            serializable_options[:except].include?(key.to_sym)
+          elsif self.serializable_options[:only]
+            !self.serializable_options[:only].include?(key.to_sym)
+          elsif self.serializable_options[:except]
+            self.serializable_options[:except].include?(key.to_sym)
           else
             false
           end
@@ -46,17 +46,12 @@ module Behave
       end
     
       def to_json(options = {})
-        self.serializable_attributes.to_json options
+        serializable_attributes.to_json options
       end
 
       def to_xml(options = {})
-        self.serializable_attributes.to_xml options
+        serializable_attributes.to_xml options
       end
-    
-      private
-        def serializable_options
-          self.class.serializable_options
-        end
     end
   end
 end

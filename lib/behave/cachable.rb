@@ -37,20 +37,15 @@ module Behave
         attributes.reject do |key, value|
           if [ :id, :_id, :type, :_type ].include?(key.to_sym)
             false
-          elsif cachable_options[:only]
-            !cachable_options[:only].include?(key.to_sym)
-          elsif cachable_options[:except]
-            cachable_options[:except].include?(key.to_sym)
+          elsif self.cachable_options[:only]
+            !self.cachable_options[:only].include?(key.to_sym)
+          elsif self.cachable_options[:except]
+            self.cachable_options[:except].include?(key.to_sym)
           else
             false
           end
         end
       end
-      
-      private
-        def cachable_options
-          self.class.cachable_options
-        end
     end
   end
 end

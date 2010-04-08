@@ -55,7 +55,7 @@ module Behave
     module InstanceMethods
       # Update the search index with the searchable item.
       def index
-        if searchable_options[:delay]
+        if self.searchable_options[:delay]
           Delayed::Job.enqueue Behave::Searcahble::IndexJob.new(self)
         else
           Sunspot.index(self)
@@ -64,17 +64,12 @@ module Behave
 
       # Remove the searchable item from the search index.
       def remove_from_index
-        if searchable_options[:delay]
+        if self.searchable_options[:delay]
           Delayed::Job.enqueue Behave::Searcahble::RemoveFromIndexJob.new(self)
         else
           Sunspot.remove(self)
         end
       end
-      
-      private
-        def searchable_options
-          self.class.searchable_options
-        end
     end
   
     class DataAccessor < Sunspot::Adapters::DataAccessor
