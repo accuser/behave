@@ -62,7 +62,11 @@ module Behave
           end
         end
 
-        reported?
+        is_reported_by? reporter
+      end
+      
+      def is_reported_by?(reporter)
+        self.reported? && self.reported_by._type == reporter.class.to_s && self.reported_by._id == reporter.class.to_s
       end
     end
   end

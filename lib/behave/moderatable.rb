@@ -58,11 +58,15 @@ module Behave
       def moderate(moderator)
         unless moderated?
           _run_moderate_callbacks do
-            update_attributes :moderated => true, :moderated_at => Time.now, :moderated_by => moderator
+            update_attributes :moderated => true, :moderated_at => Time.now.utc, :moderated_by => moderator
           end
         end
 
-        moderated?
+        is_moderated_by? moderator
+      end
+      
+      def is_moderated_by?(moderator)
+        self.moderated? && self.moderated_by._type == moderator.class.to_s && self.moderated_by._id == moderator.class.to_s
       end
     end
   end

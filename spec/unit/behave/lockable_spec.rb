@@ -87,26 +87,61 @@ describe Behave::Lockable do
       @document.destroy
     end
         
-    it "should mark the document as locked" do
-      lambda do
+    describe "when unlocked" do
+      it "should mark the document as locked" do
+        lambda do
+          @document.lock(mock_locker)
+        end.should change(@document, :locked).from(false).to(true)
+      end
+    
+      it "should record the time at which the document was locked" do
+        time_now = Time.now
+      
+        Time.stub!(:now).and_return(time_now)
+      
         @document.lock(mock_locker)
-      end.should change(@document, :locked).from(false).to(true)
+        @document.locked_at.to_s.should == time_now.utc.to_s
+      end
+    
+      it "should record the locker of the document" do
+        Locker.stub!(:find).with(42).and_return(mock_locker)
+      
+        @document.lock(mock_locker)
+        @document.locked_by.should be mock_locker
+      end
+      
+      it "should succeed" do
+        @document.lock(mock_locker).should be true
+      end
     end
     
-    it "should record the time at which the document was locked" do
-      time_now = Time.now
+    describe "when locked by the locker" do
+      before :each do
+        @document.lock(mock_locker)
+      end
       
-      Time.stub!(:now).and_return(time_now)
+      it "should update the time at which the document was locked" do
+        time_now = Time.now
       
-      @document.lock(mock_locker)
-      @document.locked_at.to_s.should == time_now.utc.to_s
+        Time.stub!(:now).and_return(time_now)
+      
+        @document.lock(mock_locker)
+        @document.locked_at.to_s.should == time_now.utc.to_s
+      end
+
+      it "should succeed" do
+        @document.lock(mock_locker).should be true
+      end
     end
     
-    it "should record the locker of the document" do
-      Locker.stub!(:find).with(42).and_return(mock_locker)
+    describe "when locked" do
+      before :each do
+        @document.lock(mock(Locker, :class => Locker, :id => 37))
+      end
       
-      @document.lock(mock_locker)
-      @document.locked_by.should be mock_locker
+      it "should fail" do
+        @document.lock(mock_locker).should be false
+      end
     end
   end
 end

@@ -62,7 +62,11 @@ module Behave
           end
         end
 
-        published?
+        is_published_by? publisher
+      end
+      
+      def is_published_by?(publisher)
+        self.published? && self.published_by._type == publisher.class.to_s && self.published_by._id == publisher.class.to_s
       end
     end
   end

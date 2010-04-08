@@ -51,23 +51,27 @@ module Behave
   
     module InstanceMethods
       def lock(locker)
-        if unlocked? || self.locked_by == locker
-          update_attributes :locked => true, :locked_at => Time.now, :locked_by => locker
-        else
+        if is_locked_by? locker
+          update_attributes :locked_at => Time.now.utc
+        elsif self.locked?
           false
+        else
+          update_attributes :locked => true, :locked_at => Time.now.utc, :locked_by => locker
         end
-      
-        locked?
+        
+        is_locked_by? locker
       end
     
+      def is_locked_by?(locker)
+        self.locked? && self.locked_by._type == locker.class.to_s && self.locked_by._id == locker.class.to_s
+      end
+      
       def unlock(locker)
-        if unlocked?
-          true
-        elsif self.locked_by == locker
+        if locked_by? locker
           update_attributes :locked => false, :locked_by => nil
-        else
-          false
         end
+      
+        unlocked?
       end
     
       def unlocked?

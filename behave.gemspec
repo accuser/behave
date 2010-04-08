@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Matthew Gibbons"]
-  s.date = %q{2010-04-07}
-  s.description = %q{Behave is a Ruby Gem that encapsulates a number of common model behaviors for Mongoid documents.}
+  s.date = %q{2010-04-08}
+  s.description = %q{Behave is a Ruby Gem that encapsulates a number of commen model behaviors.}
   s.email = %q{mhgibbons@me.com}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -26,10 +26,24 @@ Gem::Specification.new do |s|
      "behave.gemspec",
      "lib/behave.rb",
      "lib/behave/cachable.rb",
+     "lib/behave/containable.rb",
+     "lib/behave/lockable.rb",
+     "lib/behave/moderatable.rb",
+     "lib/behave/publishable.rb",
      "lib/behave/reportable.rb",
+     "lib/behave/searchable.rb",
+     "lib/behave/serializable.rb",
+     "lib/behave/textilize.rb",
+     "lib/behave/timestamp.rb",
+     "lib/behave/versionable.rb",
      "lib/cached_document.rb",
+     "spec/rcov.opts",
      "spec/spec.opts",
-     "spec/spec_helper.rb"
+     "spec/spec_helper.rb",
+     "spec/unit/behave/cachable_spec.rb",
+     "spec/unit/behave/lockable_spec.rb",
+     "spec/unit/behave/publishable_spec.rb",
+     "spec/unit/behave/reportable_spec.rb"
   ]
   s.homepage = %q{http://github.com/accuser/behave}
   s.rdoc_options = ["--charset=UTF-8"]
@@ -39,6 +53,8 @@ Gem::Specification.new do |s|
   s.test_files = [
     "spec/spec_helper.rb",
      "spec/unit/behave/cachable_spec.rb",
+     "spec/unit/behave/containable_spec.rb",
+     "spec/unit/behave/lockable_spec.rb",
      "spec/unit/behave/publishable_spec.rb",
      "spec/unit/behave/reportable_spec.rb"
   ]
@@ -53,6 +69,8 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<delayed_job>, [">= 1.7.0"])
       s.add_runtime_dependency(%q<mongoid>, [">= 2.0.0.beta2"])
       s.add_runtime_dependency(%q<mongoid_cached_document>, [">= 0.1.0"])
+      s.add_runtime_dependency(%q<nokogiri>, [">= 1.4.0"])
+      s.add_runtime_dependency(%q<RedCloth>, [">= 4.2.0"])
       s.add_runtime_dependency(%q<sunspot_rails>, [">= 1.0.0"])
     else
       s.add_dependency(%q<activemodel>, [">= 3.0.0.beta2"])
@@ -60,6 +78,8 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<delayed_job>, [">= 1.7.0"])
       s.add_dependency(%q<mongoid>, [">= 2.0.0.beta2"])
       s.add_dependency(%q<mongoid_cached_document>, [">= 0.1.0"])
+      s.add_dependency(%q<nokogiri>, [">= 1.4.0"])
+      s.add_dependency(%q<RedCloth>, [">= 4.2.0"])
       s.add_dependency(%q<sunspot_rails>, [">= 1.0.0"])
     end
   else
@@ -68,6 +88,8 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<delayed_job>, [">= 1.7.0"])
     s.add_dependency(%q<mongoid>, [">= 2.0.0.beta2"])
     s.add_dependency(%q<mongoid_cached_document>, [">= 0.1.0"])
+    s.add_dependency(%q<nokogiri>, [">= 1.4.0"])
+    s.add_dependency(%q<RedCloth>, [">= 4.2.0"])
     s.add_dependency(%q<sunspot_rails>, [">= 1.0.0"])
   end
 end
