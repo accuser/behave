@@ -1,4 +1,4 @@
-include 'active_support'
+require 'active_support'
 
 module Behave
   module Behaviors
