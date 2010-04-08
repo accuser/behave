@@ -13,11 +13,11 @@ module Behave
         include Behave::Moderatable unless moderatable?
 
         if options.has_key? :before
-          before_moderat options[:before]
+          before_moderate options[:before]
         end
         
         if options.has_key? :after
-          after_moderat options[:after]
+          after_moderate options[:after]
         end
       end
     
