@@ -21,7 +21,7 @@ module Behave
     extend ActiveSupport::Concern
 
     included do
-      belongs_to_related :container, :polymorphic => true
+      referenced_in :container, :polymorphic => true
     end
   
     module ClassMethods
